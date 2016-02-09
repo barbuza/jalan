@@ -1,6 +1,5 @@
 import UriTemplate from 'uri-templates';
 
-export const NO_REVERSE = Symbol();
 export const NOT_FOUND = 'NOT_FOUND';
 
 export class Routes {
@@ -34,7 +33,7 @@ export class Routes {
         return route.reverse(params);
       }
     }
-    return NO_REVERSE;
+    return null;
   }
 
 }

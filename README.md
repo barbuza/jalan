@@ -1,4 +1,4 @@
-# jalan [![Build Status](https://travis-ci.org/barbuza/jalan.svg?branch=master)](https://travis-ci.org/barbuza/jalan)
+# jalan [![Build Status](https://travis-ci.org/barbuza/jalan.svg?branch=master)](https://travis-ci.org/barbuza/jalan) [![npm version](https://badge.fury.io/js/jalan.svg)](https://badge.fury.io/js/jalan)
 
 functional routing for redux
 

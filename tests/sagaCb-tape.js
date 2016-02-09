@@ -10,6 +10,12 @@ function delay() {
   });
 }
 
+function runSaga(saga) {
+  const middleware = sagaMiddleware();
+  applyMiddleware(middleware)(createStore)(() => null);
+  middleware.run(saga);
+}
+
 test('sagaCbStrict', t => {
   const actual = [];
   const { listener, callback } = sagaCbStrict();
@@ -21,9 +27,7 @@ test('sagaCbStrict', t => {
     }
   }
 
-  const middleware = sagaMiddleware();
-  applyMiddleware(middleware)(createStore)(() => null);
-  middleware.run(saga);
+  runSaga(saga);
 
   listener(1);
   listener(2);
@@ -58,9 +62,7 @@ test('sagaCbLoose', t => {
     }
   }
 
-  const middleware = sagaMiddleware();
-  applyMiddleware(middleware)(createStore)(() => null);
-  middleware.run(saga);
+  runSaga(saga);
 
   listener(1);
   listener(2);

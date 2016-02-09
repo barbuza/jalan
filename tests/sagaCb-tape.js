@@ -1,6 +1,6 @@
 import test from 'tape';
-import { createStore } from 'redux';
-import { runSaga, storeIO, cps, call } from 'redux-saga';
+import { createStore, applyMiddleware } from 'redux';
+import sagaMiddleware, { cps, call } from 'redux-saga';
 
 import { sagaCbLoose, sagaCbStrict } from '../src/index';
 
@@ -21,7 +21,9 @@ test('sagaCbStrict', t => {
     }
   }
 
-  runSaga(saga(), storeIO(createStore(() => null)));
+  const middleware = sagaMiddleware();
+  applyMiddleware(middleware)(createStore)(() => null);
+  middleware.run(saga);
 
   listener(1);
   listener(2);
@@ -56,7 +58,9 @@ test('sagaCbLoose', t => {
     }
   }
 
-  runSaga(saga(), storeIO(createStore(() => null)));
+  const middleware = sagaMiddleware();
+  applyMiddleware(middleware)(createStore)(() => null);
+  middleware.run(saga);
 
   listener(1);
   listener(2);

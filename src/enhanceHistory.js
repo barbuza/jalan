@@ -1,4 +1,4 @@
-export default function enhanceHistory(history) {
+export function enhanceHistory(history) {
   let location = null;
 
   history.listen(loc => {

@@ -5,3 +5,4 @@
 /tests
 /bundle.js
 /index.html
+/.travis.yml

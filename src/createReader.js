@@ -13,11 +13,12 @@ export function createReader(history, routes) {
     const unlisten = history.listen(listener);
     try {
       while (true) {
-        const { pathname, state } = yield cps(callback);
+        const { pathname, search, state } = yield cps(callback);
         if (state && state[JALAN]) {
           continue;
         }
-        yield put(routes.match(pathname));
+        const url = pathname + (search || '');
+        yield put(routes.match(url));
       }
     } finally {
       unlisten();

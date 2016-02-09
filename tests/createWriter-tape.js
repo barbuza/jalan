@@ -29,7 +29,7 @@ test('createWriter', t => {
 
   t.deepEqual(
     saga.next({ type: 'FOO' }).value,
-    call([history, history.push], { pathname: '/foo', state: { [JALAN]: true } })
+    call([history, history.push], { pathname: '/foo', search: '', state: { [JALAN]: true } })
   );
 
   t.deepEqual(

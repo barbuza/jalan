@@ -14,8 +14,8 @@ export function enhanceHistory(history) {
       return history.listen(listener);
     },
 
-    push({ pathname, state }) {
-      history.push({ pathname, state });
+    push({ pathname, search, state }) {
+      history.push({ pathname, search, state });
     },
   };
 }

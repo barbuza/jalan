@@ -11,9 +11,16 @@ export function createWriter(history, routes) {
     while (true) {
       const action = yield take(routes.actions);
       const url = routes.reverse(action);
+
       if (history.getLocation().pathname !== url) {
+        const [pathname, maybeSearch] = url.split('?');
+        let search = '';
+        if (maybeSearch && maybeSearch.length) {
+          search = `?${maybeSearch}`;
+        }
         yield call([history, history.push], {
-          pathname: url,
+          pathname,
+          search,
           state: {
             [JALAN]: true,
           },

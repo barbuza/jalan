@@ -1,3 +1,5 @@
+import invariant from 'invariant';
+
 export function sagaCbStrict() {
   let nextCallback = null;
   const queue = [];
@@ -13,13 +15,12 @@ export function sagaCbStrict() {
   }
 
   function callback(cb) {
+    invariant(queue.length || !nextCallback, 'invalid state');
     if (queue.length) {
       const data = queue.shift();
       cb(null, data);
-    } else if (!nextCallback) {
-      nextCallback = cb;
     } else {
-      throw new Error('invalid state');
+      nextCallback = cb;
     }
   }
 
@@ -42,14 +43,13 @@ export function sagaCbLoose() {
   }
 
   function callback(cb) {
+    invariant(nextData || !nextCallback, 'invalid state');
     if (nextData) {
       const dataCopy = nextData;
       nextData = null;
       cb(null, dataCopy);
-    } else if (!nextCallback) {
-      nextCallback = cb;
     } else {
-      throw new Error('invalid state');
+      nextCallback = cb;
     }
   }
 

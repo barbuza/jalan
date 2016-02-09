@@ -3,3 +3,5 @@
 /.eslintrc
 /src
 /tests
+/bundle.js
+/index.html

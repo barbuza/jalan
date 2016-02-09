@@ -1,5 +1,8 @@
 # jalan
+
 functional routing for redux
+
+[usage example](tests/browser.js)
 
 ## usage
 ```js
@@ -16,6 +19,8 @@ const routes = {
   '/news':      NEWS,
   '/news/{id}': NEWS_ITEM
 };
+
+const history = createHistory();
 
 const finalCreateStore = applyMiddleware(sagaMiddleware(
   createJalan(history, routes)

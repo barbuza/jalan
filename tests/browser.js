@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 import 'babel-polyfill';
 import { createStore, applyMiddleware } from 'redux';
 import sagaMiddleware from 'redux-saga';
@@ -7,6 +9,11 @@ import { createJalan } from '../src/index';
 const INDEX = 'INDEX';
 const NEWS = 'NEWS';
 const NEWS_ITEM = 'NEWS_ITEM';
+
+const loggerMiddleware = () => next => action => {
+  console.info('dispatch', action);
+  return next(action);
+};
 
 function reducer(state = { route: null }, action) {
   switch (action.type) {
@@ -29,9 +36,10 @@ const routes = {
 
 const history = createHistory();
 
-const finalCreateStore = applyMiddleware(sagaMiddleware(
-  createJalan(history, routes)
-))(createStore);
+const finalCreateStore = applyMiddleware(
+  loggerMiddleware,
+  sagaMiddleware(createJalan(history, routes))
+)(createStore);
 
 const store = finalCreateStore(reducer);
 

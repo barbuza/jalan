@@ -1,6 +1,7 @@
 import test from 'tape';
 import { createMemoryHistory } from 'history';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { ActionTypes } from 'redux/lib/createStore';
 import sagaMiddleware, { take, put, call } from 'redux-saga';
 import { createJalan } from '../src/index';
 
@@ -19,6 +20,10 @@ function fetchAboutData() {
   return new Promise(resolve => {
     setTimeout(() => resolve({ text: 'about' }), 50);
   });
+}
+
+function logger(state = [], action) {
+  return [...state, action.type];
 }
 
 function router(state = { page: null }, action) {
@@ -65,23 +70,50 @@ const routes = {
   '/about': ABOUT,
 };
 
-test('isomorphic', t => {
+function createServerStore(pathname, cb) {
   const history = createMemoryHistory();
-  history.push({ pathname: '/about' });
+  history.push({ pathname });
 
   const middleware = sagaMiddleware(createJalan(history, routes), fetcherSaga);
   const finalCreateStore = applyMiddleware(middleware)(createStore);
-  const reducer = combineReducers({ router, fetcher });
+  const reducer = combineReducers({ router, fetcher, logger });
   const store = finalCreateStore(reducer);
+
+  let once = false;
 
   store.subscribe(() => {
     const state = store.getState();
-    if (state.fetcher.loaded) {
-      t.deepEqual(state, {
-        router: { page: 'about' },
-        fetcher: { loaded: true, data: { text: 'about' } },
-      });
-      t.end();
+    if (state.fetcher.loaded && !once) {
+      once = true;
+      cb(state);
     }
+  });
+}
+
+test('isomorphic', t => {
+  t.plan(2);
+
+  createServerStore('/about', state => {
+    t.deepEqual(state, {
+      router: { page: 'about' },
+      fetcher: { loaded: true, data: { text: 'about' } },
+      logger: [
+        ActionTypes.INIT,
+        ABOUT,
+        ABOUT_LOADED,
+      ],
+    });
+  });
+
+  createServerStore('/', state => {
+    t.deepEqual(state, {
+      router: { page: 'index' },
+      fetcher: { loaded: true, data: { text: 'index' } },
+      logger: [
+        ActionTypes.INIT,
+        INDEX,
+        INDEX_LOADED,
+      ],
+    });
   });
 });

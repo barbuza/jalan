@@ -1,6 +1,6 @@
 import test from 'tape';
 
-import { compileRoutes } from '../src/index';
+import { compileRoutes, NOT_FOUND } from '../src/index';
 
 test('compileRoutes', t => {
   const routes = compileRoutes({
@@ -21,6 +21,9 @@ test('compileRoutes', t => {
 
   t.deepEqual(routes.match('/search?q=test'), { type: 'SEARCH', params: { q: 'test' } });
   t.equal(routes.reverse({ type: 'SEARCH', params: { q: 'test' } }), '/search?q=test');
+
+  t.deepEqual(routes.match('/not-found'), { type: NOT_FOUND });
+  t.notOk(routes.reverse({ type: 'UNKNOWN' }));
 
   t.end();
 });

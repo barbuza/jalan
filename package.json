@@ -1,13 +1,15 @@
 {
   "name": "jalan",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "functional routing for redux",
   "main": "index.js",
   "scripts": {
-    "prepublish": "npm test && npm run build",
+    "prepublish": "npm lint && npm test && npm run build",
     "build": "babel -d lib src",
-    "test": "eslint src tests && tape -r babel-register -r babel-polyfill tests/*-tape.js | faucet",
-    "browser": "watchify -t babelify -o bundle.js tests/browser"
+    "lint": "eslint src tests",
+    "test": "nyc -i babel-register -i babel-polyfill tape tests/*-tape.js | faucet",
+    "browser": "watchify -t babelify -o bundle.js tests/browser",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "author": {
     "name": "Victor Kotseruba",
@@ -36,10 +38,12 @@
     "babel-register": "^6.4.3",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
+    "coveralls": "^2.11.6",
     "eslint": "^1.10.3",
     "eslint-config-airbnb": "^5.0.0",
     "eslint-plugin-react": "^3.16.1",
     "faucet": "0.0.1",
+    "nyc": "^5.6.0",
     "redux": "^3.3.1",
     "redux-saga": "^0.7.0",
     "tape": "^4.4.0",

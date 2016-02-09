@@ -44,6 +44,6 @@
   "dependencies": {
     "history": "^2.0.0",
     "invariant": "^2.2.0",
-    "path-to-regexp": "^1.2.1"
+    "uri-templates": "^0.1.9"
   }
 }

@@ -1,4 +1,4 @@
-import pathToRegexp from 'path-to-regexp';
+import UriTemplate from 'uri-templates';
 
 export const NO_REVERSE = Symbol();
 export const NOT_FOUND = 'NOT_FOUND';
@@ -42,29 +42,23 @@ export class Routes {
 class Route {
 
   constructor(pattern, action) {
-    this.pattern = pattern;
-    this.keys = [];
-    this.regex = pathToRegexp(this.pattern, this.keys);
+    this.template = new UriTemplate(pattern);
     this.action = action;
   }
 
   exec(url) {
-    const res = this.regex.exec(url);
-    if (!res) {
+    const params = this.template.fromUri(url);
+    if (!params) {
       return null;
     }
-    const params = {};
-    this.keys.forEach((key, index) => {
-      params[key.name] = res[index + 1];
-    });
     return {
       type: this.action,
       params,
     };
   }
 
-  reverse() {
-    return this.pattern;
+  reverse(params = {}) {
+    return this.template.fill(params);
   }
 
 }

@@ -8,6 +8,7 @@ const routes = {
   '/': 'HOME',
   '/foo': 'FOO',
   '/bar': 'BAR',
+  '/search{?q}': 'SEARCH',
 };
 
 test('createWriter', t => {
@@ -35,6 +36,15 @@ test('createWriter', t => {
   t.deepEqual(
     saga.next().value,
     take(compiledRoutes.actions)
+  );
+
+  t.deepEqual(
+    saga.next({ type: 'SEARCH', params: { q: 'spam' } }).value,
+    call([history, history.push], {
+      pathname: '/search',
+      search: '?q=spam',
+      state: { [JALAN]: true },
+    })
   );
 
   t.end();

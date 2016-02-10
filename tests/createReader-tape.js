@@ -39,3 +39,35 @@ test('createReader', t => {
 
   t.end();
 });
+
+test('createReader unlisten', t => {
+  const history = enhanceHistory(createMemoryHistory());
+
+  let unlistenCalled = 0;
+
+  const oldListen = history.listen;
+
+  history.listen = listener => {
+    const unlisten = oldListen(listener);
+    return () => {
+      unlistenCalled++;
+      unlisten();
+    };
+  };
+
+  const reader = createReader(history, compileRoutes(routes));
+
+  const saga = reader();
+
+  saga.next();
+
+  try {
+    saga.throw('');
+  } catch (err) {
+    // pass
+  }
+
+  t.equal(unlistenCalled, 1);
+
+  t.end();
+});

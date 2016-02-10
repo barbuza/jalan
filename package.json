@@ -7,7 +7,7 @@
     "prepublish": "npm run lint && npm test && npm run build",
     "build": "babel -d lib src",
     "lint": "eslint src tests",
-    "test": "nyc -i babel-register -i babel-polyfill tape tests/*-tape.js | faucet",
+    "test": "nyc -i babel-register -i babel-polyfill tape tests/*-tape.js | faucet && nyc report",
     "browser": "watchify -t babelify -o bundle.js tests/browser",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },

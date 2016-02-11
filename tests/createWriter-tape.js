@@ -23,9 +23,8 @@ test('createWriter', t => {
   );
 
   t.deepEqual(
-    saga.next({ type: 'HOME' }).value,
-    take(compiledRoutes.actions),
-    'ignore current location'
+    saga.next({ type: 'HOME', [JALAN]: true }).value,
+    take(compiledRoutes.actions)
   );
 
   t.deepEqual(

@@ -10,23 +10,27 @@ export function createWriter(history, routes) {
   return function* writer() {
     while (true) {
       const action = yield take(routes.actions);
+
+      if (action[JALAN]) {
+        continue;
+      }
+
       const url = routes.reverse(action);
       invariant(url, 'reverse failure');
 
-      if (history.getLocation().pathname !== url) {
-        const [pathname, maybeSearch] = url.split('?');
-        let search = '';
-        if (maybeSearch && maybeSearch.length) {
-          search = `?${maybeSearch}`;
-        }
-        yield call([history, history.push], {
-          pathname,
-          search,
-          state: {
-            [JALAN]: true,
-          },
-        });
+      const [pathname, maybeSearch] = url.split('?');
+      let search = '';
+      if (maybeSearch && maybeSearch.length) {
+        search = `?${maybeSearch}`;
       }
+
+      yield call([history, history.push], {
+        pathname,
+        search,
+        state: {
+          [JALAN]: true,
+        },
+      });
     }
   };
 }

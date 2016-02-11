@@ -18,7 +18,7 @@ export function createReader(history, routes) {
           continue;
         }
         const url = pathname + (search || '');
-        yield put(routes.match(url));
+        yield put({ ...routes.match(url), [JALAN]: true });
       }
     } finally {
       unlisten();

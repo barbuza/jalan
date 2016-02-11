@@ -14,11 +14,11 @@ import { createJalan } from 'jalan';
 import { INDEX, NEWS, NEWS_ITEM } from '...';
 import reducer from '...';
 
-const routes = {
-  '/':          INDEX,
-  '/news':      NEWS,
-  '/news/{id}': NEWS_ITEM
-};
+const routes = [
+  { '/':          INDEX     },
+  { '/news':      NEWS      },
+  { '/news/{id}': NEWS_ITEM },
+];
 
 const history = createHistory();
 

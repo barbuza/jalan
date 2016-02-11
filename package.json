@@ -1,11 +1,11 @@
 {
   "name": "jalan",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "functional routing for redux",
   "main": "index.js",
   "scripts": {
-    "prepublish": "npm run lint && npm test && npm run build",
-    "build": "babel -d lib src",
+    "prepublish": "git diff --cached --exit-code && git diff --exit-code && npm run lint && npm test && npm run build",
+    "build": "rm -rf lib && babel -d lib src",
     "lint": "eslint src tests",
     "test": "nyc -i babel-register -i babel-polyfill tape tests/*-tape.js | faucet && nyc report",
     "browser": "watchify -t babelify -o bundle.js tests/browser",

@@ -4,12 +4,12 @@ import { createMemoryHistory } from 'history';
 
 import { compileRoutes, enhanceHistory, createWriter, JALAN } from '../src/index';
 
-const routes = {
-  '/': 'HOME',
-  '/foo': 'FOO',
-  '/bar': 'BAR',
-  '/search{?q}': 'SEARCH',
-};
+const routes = [
+  { '/': 'HOME' },
+  { '/foo': 'FOO' },
+  { '/bar': 'BAR' },
+  { '/search{?q}': 'SEARCH' },
+];
 
 test('createWriter', t => {
   const history = enhanceHistory(createMemoryHistory());

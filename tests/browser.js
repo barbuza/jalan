@@ -28,11 +28,11 @@ function reducer(state = { route: null }, action) {
   }
 }
 
-const routes = {
-  '/': INDEX,
-  '/news': NEWS,
-  '/news/{id}': NEWS_ITEM,
-};
+const routes = [
+  { '/': INDEX },
+  { '/news': NEWS },
+  { '/news/{id}': NEWS_ITEM },
+];
 
 const history = createHistory();
 

@@ -4,11 +4,11 @@ import { createMemoryHistory } from 'history';
 
 import { compileRoutes, enhanceHistory, createReader } from '../src/index';
 
-const routes = {
-  '/': 'HOME',
-  '/foo': 'FOO',
-  '/bar': 'BAR',
-};
+const routes = [
+  { '/': 'HOME' },
+  { '/foo': 'FOO' },
+  { '/bar': 'BAR' },
+];
 
 test('createReader', t => {
   const history = enhanceHistory(createMemoryHistory());

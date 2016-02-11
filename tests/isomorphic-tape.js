@@ -65,10 +65,10 @@ function* fetcherSaga() {
   }
 }
 
-const routes = {
-  '/': INDEX,
-  '/about': ABOUT,
-};
+const routes = [
+  { '/': INDEX },
+  { '/about': ABOUT },
+];
 
 function createServerStore(pathname, cb) {
   const history = createMemoryHistory();

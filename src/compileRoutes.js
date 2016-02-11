@@ -65,8 +65,9 @@ class Route {
 export function compileRoutes(patterns, notFoundAction = NOT_FOUND) {
   const routes = [];
 
-  Object.keys(patterns).forEach(pattern => {
-    routes.push(new Route(pattern, patterns[pattern]));
+  patterns.forEach(pair => {
+    const pattern = Object.keys(pair)[0];
+    routes.push(new Route(pattern, pair[pattern]));
   });
 
   return new Routes(routes, notFoundAction);

@@ -6,11 +6,11 @@ import { createMemoryHistory } from 'history';
 
 import { enhanceHistory, createJalan } from '../src/index';
 
-const routes = {
-  '/': 'HOME',
-  '/foo': 'FOO',
-  '/bar': 'BAR',
-};
+const routes = [
+  { '/': 'HOME' },
+  { '/foo': 'FOO' },
+  { '/bar': 'BAR' },
+];
 
 test('integration', t => {
   const actual = [];

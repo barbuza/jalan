@@ -5,3 +5,4 @@ export { createJalan } from './createJalan';
 export { compileRoutes, NOT_FOUND } from './compileRoutes';
 export { enhanceHistory } from './enhanceHistory';
 export { JALAN } from './utils';
+export { metaMiddleware } from './metaMiddleware';
